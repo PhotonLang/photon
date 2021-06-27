@@ -2,3 +2,4 @@ Pillow
 polaroid
 aiohttp
 requests
+lark-parser
