@@ -23,4 +23,4 @@ ntuple: "(" (NUMBER ",")* NUMBER ")"
 %import common.INT -> INTEGER
 
 
-// Inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark
+// Inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark. Subject to major changes!
