@@ -27,6 +27,10 @@ def safe_read(path: str) -> BytesIO:
     return buffer
 
 
+def read_lark_file(path: str) -> str:
+    with open(path, "r") as f:
+        return f.read()
+
 
 class TimerHelper:
     def __init__(self):

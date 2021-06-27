@@ -1,1 +1,26 @@
-//being added soon
+?start: statement*
+
+
+
+statement: "OPEN"i string "AS"i NAME -> open_stmt
+        |"APPLY"i string "TO"i NAME -> apply_stmt
+string: /("[^"\\]*(\\.[^"\\]*)*"|'[^'\\]*(\\.[^'\\]*)*')/
+integer: /-?\d+/
+ntuple: "(" (NUMBER ",")* NUMBER ")"
+
+%import common.WS
+%ignore WS
+%import common.WS_INLINE
+%ignore WS_INLINE
+%import common.CNAME -> NAME
+%import common.NEWLINE -> NEWLINE
+%import common.CPP_COMMENT -> SINGLE_COMMENT
+%import common.C_COMMENT -> MULTILINE_COMMENT
+%ignore MULTILINE_COMMENT
+%ignore SINGLE_COMMENT
+%ignore NEWLINE
+%import common.SIGNED_NUMBER -> NUMBER
+%import common.INT -> INTEGER
+
+
+// Inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark
