@@ -4,7 +4,7 @@
 
 statement: "OPEN"i string "AS"i NAME -> open_stmt
         |"APPLY"i string "TO"i NAME -> apply_stmt
-        |"SAVE"i NAME string -> save_stmt
+        |"SAVE"i NAME "TOSYS" string -> save_stmt
         |"CLOSE"i NAME -> close_stmt
 string: /("[^"\\]*(\\.[^"\\]*)*"|'[^'\\]*(\\.[^'\\]*)*')/
 integer: /-?\d+/
