@@ -25,5 +25,5 @@ ntuple: "(" (NUMBER ",")* NUMBER ")"
 %import common.INT -> INTEGER
 
 
-// This lark file is heavily inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark, cus suck at writing lark files. 
+// This lark file is heavily inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark, cus I suck at writing lark files :( 
 // Subject to major changes!
