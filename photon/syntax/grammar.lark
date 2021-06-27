@@ -4,6 +4,8 @@
 
 statement: "OPEN"i string "AS"i NAME -> open_stmt
         |"APPLY"i string "TO"i NAME -> apply_stmt
+        |"SAVE"i NAME string -> save_stmt
+        |"CLOSE"i NAME -> close_stmt
 string: /("[^"\\]*(\\.[^"\\]*)*"|'[^'\\]*(\\.[^'\\]*)*')/
 integer: /-?\d+/
 ntuple: "(" (NUMBER ",")* NUMBER ")"
@@ -23,4 +25,5 @@ ntuple: "(" (NUMBER ",")* NUMBER ")"
 %import common.INT -> INTEGER
 
 
-// Inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark. Subject to major changes!
+// This lark file is heavily inspired by: https://github.com/f-stop-lang/f-stop/blob/main/f_stop/grammar.lark, cus suck at writing lark files. 
+// Subject to major changes!
