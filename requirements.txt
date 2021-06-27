@@ -1,0 +1,4 @@
+Pillow
+polaroid
+aiohttp
+requests
