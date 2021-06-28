@@ -15,3 +15,11 @@ SAVE image TO 'solarized-image.png'
 ```
 
 Photon is supposed to be an easy language to work with, as its primary focus is manipulating images, its not a general purpose language.
+
+
+## Some ideas
+
+1. Change File Extension
+2. Possible change `TOSYS` to just `TO` however `TOSYS` strongly shows a save to the system rather than to a variable identifier
+
+Please feel free to make issues with your ideas!
