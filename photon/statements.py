@@ -1,9 +1,15 @@
 from io import BytesIO
+import functools
+
 from typing import Union
+from concurrent import futures
 
 from .prelude import Env, AsyncEnv
+from .errors import ConfigError, RunError
+
 from . import _polaroid
 from . import helpers
+
 
 class Open:
     """
@@ -65,6 +71,21 @@ class CompileState:
     def __init__(self, statements: Union[tuple, list]):
         self.statements = statements
 
-    def run(self, env: Env):
-        for i in self.statements:
-            i._exec(env)
+    def run(self, env: Env, *, skip_check: bool = False):
+        if env._async is not True and skip_check is False:
+            for i in self.statements:
+                i._exec(env)
+        else:
+            raise RunError("Async mode is enabled, cannot run with blocking function.")
+
+
+    async def run_async(self, env: Env, *, executor: futures.ThreadPoolExecutor = None):
+        if env._async is True:
+            partial = functools.partial(self.run, env, skip_check = True)
+            executor = executor or futures.ThreadPoolExecutor(env._async_config.max_workers)
+            await env.loop.run_in_executor(executor, partial)
+
+
+
+
+    

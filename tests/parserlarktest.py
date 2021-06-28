@@ -11,7 +11,7 @@ timer = TimerHelper()
 
 text = """
 OPEN './tests/image.jpg' AS image
-APPLY 'solarize' TO image
+APPLY 'grayscale' TO image
 SAVE image TOSYS 'output.png'
 CLOSE image
 """

@@ -6,12 +6,22 @@ from typing import Dict, Union, Callable, Any
 from io import BytesIO
 from concurrent import futures
 
+from . import helpers
+from .errors import ConfigError
+class AsyncConfig:
+    def __init__(self, max_workers: int, enabled: bool):
+        self.max_workers = max_workers
+        self.enabled = enabled
+    
+
 class Env:
     def __init__(self) -> None:
         self._images: Dict[str, BytesIO] = {} # likely config: IMAGE_IDENTIFIER: BytesIO
         self._sync_http_session: requests.Session = None # this is filled in the first request
         self._async_http_session: aiohttp.ClientSession = None # this is filled in the first async request
         self._loop = asyncio.get_event_loop()
+        self._async = False
+        self._async_config = None
 
     def __repr__(self) -> str:
         return "<Env images={}>".format(str(self._images))
@@ -30,6 +40,22 @@ class Env:
             return {identifier, result}
         else:
             return result
+    
+    def read_config(self, config_fp: str = "photon.config.json"):
+        config = None
+        try:
+            config: dict = helpers.read_json(config_fp)
+        except FileNotFoundError:
+            return
+
+        async_settings = config.get("ASYNC_MODE")
+        if async_settings is None:
+            raise ConfigError("Missing ASYNC_MODE config settings. This is required for Photon to function")
+        
+        max_workers = async_settings.get("max_workers", 1)
+        async_enabled = async_settings.get("enabled", False)
+        self._async_config = AsyncConfig(max_workers, async_enabled)
+
 
     def update(self, identifier: str, image: BytesIO):
         self._images[identifier] = image
