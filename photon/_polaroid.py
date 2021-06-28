@@ -6,7 +6,7 @@ def _save_to_buffer(image: Union[Image, bytes, BytesIO], *, buffer: Optional[Byt
     # allow for buffer kwarg for consistency among libraries
     if isinstance(image, BytesIO):
         return image
-    elif isinstance(image, Image.Image):
+    elif isinstance(image, Image):
         return BytesIO(image.save_bytes())
     elif isinstance(image, bytes):
         return BytesIO(image)
@@ -18,7 +18,7 @@ def _prepare_for_process(image: Union[bytes, BytesIO]) -> Image:
         return Image(image)
     
 
-def run_image_method(image: Image, method: str, *args, **kwargs):
+def run_image_method(image: Image, method: str, *args, **kwargs) -> Image:
     method = getattr(image, method)
     result = method(*args, **kwargs)
     return result if result is not None else image

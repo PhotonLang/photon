@@ -31,6 +31,9 @@ class Env:
         else:
             return result
 
+    def update(self, identifier: str, image: BytesIO):
+        self._images[identifier] = image
+
     async def _request_async(self, url: str, method: str = "GET", *args, **kwargs) -> aiohttp.ClientResponse:
         if self._async_http_session is None or self._async_http_session.closed is True:
             self._async_http_session = aiohttp.ClientSession(raise_for_status = True)
