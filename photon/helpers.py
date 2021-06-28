@@ -1,4 +1,5 @@
 import time
+import json
 
 from io import BytesIO
 
@@ -15,7 +16,9 @@ def safe_save(image: BytesIO, path: str) -> None:
         raw_bytes = image.getvalue()
         temp.write(raw_bytes)
 
-
+def read_json(path: str) -> dict:
+    with open(path, "r") as f:
+        return json.load(f)
 
 def safe_read(path: str) -> BytesIO:
     with open(path, "rb") as temp:

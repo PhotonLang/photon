@@ -2,8 +2,9 @@ import requests
 import aiohttp
 import asyncio
 
-from typing import Dict, Union
+from typing import Dict, Union, Callable, Any
 from io import BytesIO
+from concurrent import futures
 
 class Env:
     def __init__(self) -> None:
@@ -37,12 +38,39 @@ class Env:
         resp = await self._async_http_session.request(method, url, *args, **kwargs)
         return resp
 
-    async def _request_sync(self, url: str, method: str = "GET", *args, **kwargs) -> requests.Response:
+    def _request_sync(self, url: str, method: str = "GET", *args, **kwargs) -> requests.Response:
         if self._sync_http_session is None:
             self._sync_http_session = requests.Session()
         
         resp = self._sync_http_session.request(method, url, *args, **kwargs)
         return resp
+
+    def exec(self, func: Callable, *args, **kwargs) -> Any:
+        # easy subclass for AsyncEnv
+        if asyncio.iscoroutinefunction(func):
+            return self._loop.run_until_complete(func(*args, **kwargs))
+
+        return func(*args, **kwargs)
+        
+
+
+
+
+class AsyncEnv(Env):
+    def __init__(self, *, max_workers: int) -> None:
+        super().__init__()
+        self._executor = futures.ThreadPoolExecutor(max_workers)
+
+    async def exec(self, func: Callable, *args, **kwargs) -> Any:
+        if asyncio.iscoroutinefunction(func):
+            return await func(*args, **kwargs)
+        else:
+            return await self._loop.run_in_executor(self._executor, func(*args, **kwargs))
+
+    
+    
+
+    
 
 
 
