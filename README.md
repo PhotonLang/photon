@@ -11,7 +11,7 @@ I was insipred to make this project by: https://github.com/f-stop-lang because i
 ```
 OPEN 'image.png' AS image
 APPLY 'solarize' TO image
-SAVE image TO 'solarized-image.png'
+SAVE image TOSYS 'solarized-image.png'
 ```
 
 Photon is supposed to be an easy language to work with, as its primary focus is manipulating images, its not a general purpose language.
