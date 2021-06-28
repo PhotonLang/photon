@@ -10,8 +10,8 @@ parser = Lark(grammar)
 timer = TimerHelper()
 
 text = """
-OPEN './tests/image.jpg' AS image
-APPLY 'grayscale' TO image
+OPEN './examples/solarize-image/logo.png' AS image
+APPLY 'solarize' TO image
 SAVE image TOSYS 'output.png'
 CLOSE image
 """
