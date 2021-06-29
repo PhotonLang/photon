@@ -8,7 +8,6 @@ def unsafe_save(image: bytes, path: str) -> None:
         temp.write(image)
 
     
-
 def safe_save(image: BytesIO, path: str) -> None:
     # we call this "safe" as we give this an IO handler rather than raw bytes
     # our IO retrieves these bytes safely locally in our function
@@ -31,6 +30,10 @@ def safe_read(path: str) -> BytesIO:
 
 
 def read_lark_file(path: str) -> str:
+    with open(path, "r") as f:
+        return f.read()
+
+def read_photon_file(path: str) -> str:
     with open(path, "r") as f:
         return f.read()
 

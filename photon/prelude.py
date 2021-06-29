@@ -5,6 +5,7 @@ import asyncio
 from typing import Dict, Union, Callable, Any
 from io import BytesIO
 from concurrent import futures
+from lark import Lark
 
 from . import helpers
 from .errors import ConfigError
@@ -80,6 +81,11 @@ class Env:
             return self._loop.run_until_complete(func(*args, **kwargs))
 
         return func(*args, **kwargs)
+
+    def create_parser(self, syntax_loc: str) -> Lark:
+        return Lark(helpers.read_lark_file(syntax_loc))
+        
+
         
 
 
