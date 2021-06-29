@@ -1,6 +1,0 @@
-{
-    "ASYNC_MODE": {
-        "enabled": true,
-        "max_workers": 4
-    }
-}
