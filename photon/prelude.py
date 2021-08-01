@@ -9,6 +9,7 @@ from lark import Lark
 
 from . import helpers
 from .errors import ConfigError
+
 class AsyncConfig:
     def __init__(self, max_workers: int, enabled: bool):
         self.max_workers = max_workers
@@ -86,11 +87,6 @@ class Env:
         return Lark(helpers.read_lark_file(syntax_loc))
         
 
-        
-
-
-
-
 class AsyncEnv(Env):
     def __init__(self, *, max_workers: int) -> None:
         super().__init__()
@@ -101,12 +97,3 @@ class AsyncEnv(Env):
             return await func(*args, **kwargs)
         else:
             return await self._loop.run_in_executor(self._executor, func(*args, **kwargs))
-
-    
-    
-
-    
-
-
-
-
